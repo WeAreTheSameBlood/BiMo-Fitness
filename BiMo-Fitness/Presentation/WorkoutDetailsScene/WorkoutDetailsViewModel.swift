@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class WorkoutDetailsViewModel: ObservableObject {
+final class WorkoutDetailsViewModel: BaseViewModel {
     // MARK: - Properties
     @Published var workout: Workout
     

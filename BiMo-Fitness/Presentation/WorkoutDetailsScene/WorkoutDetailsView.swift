@@ -14,12 +14,12 @@ struct WorkoutDetailsView: View {
     // MARK: - Body
     var body: some View {
         VStack {
-            Text(viewModel.workout.name).font(.largeTitle)
+            Text(viewModel.workout.name)
+                .font(.largeTitle)
         }
         .navigationTitle("Details")
     }
 }
-
 
 //#Preview {
 //    WorkoutDetailsView()

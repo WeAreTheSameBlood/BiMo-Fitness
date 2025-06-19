@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct GalleryView: View {
+    // MARK: - Environments
+    @EnvironmentObject private var storageManager: StorageManagerImpl
+    
     // MARK: - Properties
-    @StateObject var vm = GalleryViewModel(service: WorkoutService())
+    @StateObject var viewModel = GalleryViewModel()
     
     // MARK: - Body
     var body: some View {
         NavigationView {
-            List(vm.workouts) { (workout) in
+            List(viewModel.workouts) { (workout) in
                 NavigationLink(workout.name) {
                     WorkoutDetailsView(viewModel: .init(workout: workout))
                 }
@@ -23,11 +26,12 @@ struct GalleryView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink("Add") {
-                        AddWorkoutView(viewModel: .init(service: ExerciseService()))
+                        AddWorkoutView()
                     }
                 }
             }
         }
+        .onAppear { viewModel.setup(storageManager) }
     }
 }
 

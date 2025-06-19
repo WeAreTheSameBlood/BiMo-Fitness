@@ -7,21 +7,40 @@
 
 import Foundation
 
-final class GalleryViewModel: ObservableObject {
+final class GalleryViewModel: BaseViewModel {
     // MARK: - Properties
     @Published var workouts: [Workout] = []
-    private let workoutManager: WorkoutManager
-
-    // MARK: - Init
-    init(service: WorkoutManager) {
-        self.workoutManager = service
-        service.fetchWorkouts()
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$workouts)
+    
+    // MARK: - Services
+    private var storageManager: (any StorageManager)?
+    
+    // MARK: - Setup
+    func setup(_ storageManager: any StorageManager) {
+        self.storageManager = storageManager
+        setupBinding()
     }
 }
 
 // MARK: - Private
 private extension GalleryViewModel {
+    func setupBinding() {
+        guard let storageManager else { return }
+        storageManager.contextChangedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.fetchWorkouts()
+            }
+            .store(in: &cancellables)
+    }
     
+    func fetchWorkouts() {
+        guard let storageManager else { return }
+        Task { @MainActor in
+            workouts = await storageManager.fetchAll(
+                Workout.self,
+                sorts: [SortDescriptor(\Workout.dateCreated)],
+                limit: nil
+            )
+        }
+    }
 }
