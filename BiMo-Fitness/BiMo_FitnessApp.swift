@@ -25,7 +25,7 @@ struct BiMo_FitnessApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            GalleryView()
         }
         .modelContainer(sharedModelContainer)
     }
