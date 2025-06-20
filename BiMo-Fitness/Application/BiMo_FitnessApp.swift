@@ -11,15 +11,30 @@ import SwiftData
 @main
 struct BiMo_FitnessApp: App {
     // MARK: - Properties
-    @StateObject private var workoutManager = WorkoutServiceImpl()
     @StateObject private var storageManager = StorageManagerImpl()
-
+    
+    // MARK: - Init
+    init() {
+        defaultCheck()
+    }
+    
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
             GalleryView()
-                .environmentObject(workoutManager)
                 .environmentObject(storageManager)
+        }
+    }
+}
+
+// MARK: - Private
+private extension BiMo_FitnessApp {
+    func defaultCheck() {
+        if !UserDefaults.standard.didSeedData {
+            Task { @MainActor in
+                await self.storageManager.seedDefaultExercises()
+                UserDefaults.standard.didSeedData = true
+            }
         }
     }
 }

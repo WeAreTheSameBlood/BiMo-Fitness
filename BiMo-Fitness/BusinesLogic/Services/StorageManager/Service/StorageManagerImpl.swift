@@ -88,3 +88,120 @@ private extension StorageManagerImpl {
         }
     }
 }
+
+// MARK: - SeedDeafault
+extension StorageManagerImpl {
+  @MainActor
+  func seedDefaultExercises() async {
+    let existing: [Exercise] = await fetchAll(Exercise.self)
+//    guard existing.isEmpty else { return }
+    
+    let defaults: [Exercise] = [
+        Exercise(name: "Squat", muscleGroups: [MuscleGroup.legs.rawValue]),
+        Exercise(name: "Front Squat", muscleGroups: [MuscleGroup.legs.rawValue]),
+        Exercise(name: "Deadlift", muscleGroups: [
+            MuscleGroup.back.rawValue,
+            MuscleGroup.legs.rawValue
+        ]),
+        Exercise(name: "Bench Press", muscleGroups: [
+            MuscleGroup.chest.rawValue,
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Incline Bench Press", muscleGroups: [
+            MuscleGroup.chest.rawValue,
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Overhead Press", muscleGroups: [
+            MuscleGroup.shoulders.rawValue,
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Pull-up", muscleGroups: [
+            MuscleGroup.back.rawValue,
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Chin-up", muscleGroups: [
+            MuscleGroup.back.rawValue,
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Barbell Row", muscleGroups: [
+            MuscleGroup.back.rawValue,
+            MuscleGroup.arms.rawValue
+        ]
+                ),
+        Exercise(name: "Pendlay Row", muscleGroups: [
+            MuscleGroup.back.rawValue,
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Lat Pulldown", muscleGroups: [
+            MuscleGroup.back.rawValue,
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Dumbbell Curl", muscleGroups: [MuscleGroup.arms.rawValue]),
+        Exercise(name: "Triceps Extension", muscleGroups: [MuscleGroup.arms.rawValue]),
+        Exercise(name: "Hammer Curl", muscleGroups: [MuscleGroup.arms.rawValue]),
+        Exercise(name: "Lateral Raise", muscleGroups: [MuscleGroup.shoulders.rawValue]),
+        Exercise(name: "Face Pull", muscleGroups: [
+            MuscleGroup.shoulders.rawValue,
+            MuscleGroup.back.rawValue
+        ]),
+        Exercise(name: "Leg Press", muscleGroups: [MuscleGroup.legs.rawValue]),
+        Exercise(name: "Leg Extension", muscleGroups: [MuscleGroup.legs.rawValue]),
+        Exercise(name: "Leg Curl", muscleGroups: [MuscleGroup.legs.rawValue]),
+        Exercise(name: "Calf Raise", muscleGroups: [MuscleGroup.legs.rawValue]),
+        Exercise(name: "Hip Thrust", muscleGroups: [MuscleGroup.legs.rawValue]),
+        Exercise(name: "Bulgarian Split Squat", muscleGroups: [
+            MuscleGroup.legs.rawValue,
+        ]),
+        Exercise(name: "Romanian Deadlift", muscleGroups: [
+            MuscleGroup.legs.rawValue,
+            MuscleGroup.back.rawValue
+        ]),
+        Exercise(name: "Good Morning", muscleGroups: [
+            MuscleGroup.back.rawValue,
+            MuscleGroup.legs.rawValue
+        ]),
+        Exercise(name: "Chest Fly", muscleGroups: [MuscleGroup.chest.rawValue,]),
+        Exercise(name: "Cable Crossover", muscleGroups: [MuscleGroup.chest.rawValue]),
+        Exercise(name: "Dips", muscleGroups: [
+            MuscleGroup.chest.rawValue,
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Seated Row", muscleGroups: [
+            MuscleGroup.back.rawValue, 
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Shrug", muscleGroups: [
+            MuscleGroup.shoulders.rawValue,
+            MuscleGroup.back.rawValue
+        ]),
+        Exercise(name: "Farmer's Walk", muscleGroups: [
+            MuscleGroup.back.rawValue,
+            MuscleGroup.legs.rawValue
+        ]),
+        Exercise(name: "Reverse Fly", muscleGroups: [
+            MuscleGroup.shoulders.rawValue,
+            MuscleGroup.back.rawValue
+        ]),
+        Exercise(name: "Arnold Press", muscleGroups: [
+            MuscleGroup.shoulders.rawValue,
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Preacher Curl", muscleGroups: [MuscleGroup.arms.rawValue]),
+        Exercise(name: "Skullcrusher", muscleGroups: [MuscleGroup.arms.rawValue]),
+        Exercise(name: "Plank", muscleGroups: [MuscleGroup.abs.rawValue]),
+        Exercise(name: "Mountain Climber", muscleGroups: [
+            MuscleGroup.abs.rawValue,
+            MuscleGroup.legs.rawValue
+        ]),
+        Exercise(name: "Push-up", muscleGroups: [
+            MuscleGroup.chest.rawValue,
+            MuscleGroup.arms.rawValue
+        ]),
+        Exercise(name: "Close-Grip Bench Press", muscleGroups: [
+            MuscleGroup.chest.rawValue,
+            MuscleGroup.arms.rawValue
+        ])
+    ]
+    for ex in defaults { create(model: ex) }
+  }
+}
